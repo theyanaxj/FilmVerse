@@ -1,5 +1,3 @@
-
-const API_KEY = "ec31861437ccd5379e2c1c78c01b2bce"; // 
 const PROXY_URL = "proxy.php";
 const API_ROOT = "https://api.themoviedb.org/3";
 const IMG = (path, w=500) => path ? `https://image.tmdb.org/t/p/w${w}${path}` : "";
