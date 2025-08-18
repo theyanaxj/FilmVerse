@@ -1,5 +1,6 @@
 
 const API_KEY = "ec31861437ccd5379e2c1c78c01b2bce"; // 
+const PROXY_URL = "proxy.php";
 const API_ROOT = "https://api.themoviedb.org/3";
 const IMG = (path, w=500) => path ? `https://image.tmdb.org/t/p/w${w}${path}` : "";
 
@@ -28,12 +29,13 @@ const searchInput = document.getElementById("searchInput");
 
 
 const getJSON = async (endpoint, params = {}) => {
-  const url = new URL(`${API_ROOT}${endpoint}`);
-  url.searchParams.set("api_key", API_KEY);
+  const url = new URL(PROXY_URL);
+  url.searchParams.set("endpoint", endpoint);
   url.searchParams.set("language", "th-TH");
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`API error ${res.status}`);
+  if (!res.ok) throw new Error(`Proxy error ${res.status}`);
   return res.json();
 };
 
