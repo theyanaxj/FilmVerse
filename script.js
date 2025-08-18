@@ -29,10 +29,12 @@ const searchInput = document.getElementById("searchInput");
 
 
 const getJSON = async (endpoint, params = {}) => {
-  const url = new URL(PROXY_URL);
+  const url = new URL(PROXY_URL, window.location.href);
   url.searchParams.set("endpoint", endpoint);
-  url.searchParams.set("language", "th-TH");
-  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  
+  for (const [k, v] of Object.entries(params)) {
+    url.searchParams.set(k, v);
+  }
   
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Proxy error ${res.status}`);
