@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FilmVerse — แนะนำหนัง & ซีรีส์</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://image.tmdb.org">
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-left">
+      <a class="logo" href="#">FilmVerse</a>
+      <nav class="nav-links">
+        <div class="dropdown">
+          <button class="dropbtn">ภาพยนตร์ ▾</button>
+          <div id="genreMenu" class="dropdown-content"></div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">ข่าว ▾</button>
+          <div class="dropdown-content">
+            <a href="#news-new-movies" data-news="new-movies">ข่าวหนังใหม่</a>
+            <a href="#news-special-articles" data-news="special">บทความพิเศษ</a>
+          </div>
+        </div>
+        
+        <a class="nav-link" href="about.html">About</a>
+      </nav>
+    </div>
+    <form id="searchForm" class="search">
+      <input id="searchInput" type="search" placeholder="ค้นหาชื่อหนัง / นักแสดง..." aria-label="ค้นหา" />
+      <button type="submit">ค้นหา</button>
+    </form>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <h1 id="hero-title">กำลังโหลด...</h1>
+      <p id="hero-overview"></p>
+      <div class="hero-actions">
+        <a id="hero-link" class="btn primary" target="_blank" rel="noopener">ดูรายละเอียด</a>
+      </div>
+    </div>
+    <div class="hero-backdrop" id="hero-backdrop" aria-hidden="true"></div>
+  </section>
+
+  <main class="container">
+    <section class="row">
+      <h2>กำลังมาแรง (Trending)</h2>
+      <div id="row-trending" class="scroller"></div>
+    </section>
+
+    <section class="row">
+      <h2>ยอดนิยม (Popular)</h2>
+      <div id="row-popular" class="scroller"></div>
+    </section>
+
+    <section class="row">
+      <h2>คะแนนสูงสุด (Top Rated)</h2>
+      <div id="row-toprated" class="scroller"></div>
+    </section>
+
+    <section class="row">
+      <h2>กำลังฉาย / กำลังจะฉาย (Now / Upcoming)</h2>
+      <div id="row-now" class="scroller"></div>
+    </section>
+
+    <section class="row" id="genre-result-section" hidden>
+      <h2 id="genre-result-title">ผลลัพธ์ตามหมวดหมู่</h2>
+      <div id="row-genre" class="scroller"></div>
+    </section>
+
+    <section class="row" id="search-result-section" hidden>
+      <h2>ผลการค้นหา</h2>
+      <div id="row-search" class="scroller"></div>
+    </section>
+
+    <section class="row" id="news-section" hidden>
+      <h2 id="news-title">ข่าว</h2>
+      <div id="row-news" class="scroller"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>ข้อมูลและรูปภาพโดย TMDb</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
