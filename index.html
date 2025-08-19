@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://image.tmdb.org">
 </head>
 <body>
-  
   <header class="nav">
     <div class="nav-left">
       <a class="logo" href="#">FilmVerse</a>
@@ -20,19 +19,12 @@
         <div class="dropdown">
           <button class="dropbtn">ข่าว ▾</button>
           <div class="dropdown-content">
-            <a href="#news-new-movies">ข่าวหนังใหม่</a>
-            <a href="#news-actors">ข่าวนักแสดง</a>
-            <a href="#news-special-articles">บทความพิเศษ</a>
+            <a href="#news-new-movies" data-news="new-movies">ข่าวหนังใหม่</a>
+            <a href="#news-special-articles" data-news="special">บทความพิเศษ</a>
           </div>
         </div>
-        <div class="dropdown">
-          <button class="dropbtn">About ▾</button>
-          <div class="dropdown-content">
-            <a href="#about-purpose">จุดประสงค์</a>
-            <a href="#about-creators">ผู้จัดทำ</a>
-            <a href="#about-contact">ติดต่อ</a>
-          </div>
-        </div>
+        
+        <a class="nav-link" href="about.html">About</a>
       </nav>
     </div>
     <form id="searchForm" class="search">
@@ -81,6 +73,11 @@
     <section class="row" id="search-result-section" hidden>
       <h2>ผลการค้นหา</h2>
       <div id="row-search" class="scroller"></div>
+    </section>
+
+    <section class="row" id="news-section" hidden>
+      <h2 id="news-title">ข่าว</h2>
+      <div id="row-news" class="scroller"></div>
     </section>
   </main>
 
