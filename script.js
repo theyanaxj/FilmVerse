@@ -1,15 +1,15 @@
+// ✅ ตั้งค่า API Key และ Root
 const API_KEY = "ec31861437ccd5379e2c1c78c01b2bce";
 const API_ROOT = "https://api.themoviedb.org/3";
 const IMG = (path, w=500) => path ? `https://image.tmdb.org/t/p/w${w}${path}` : "";
 
-
+// ===== Element อ้างอิง =====
 const heroEls = {
   title: document.getElementById("hero-title"),
   overview: document.getElementById("hero-overview"),
   link: document.getElementById("hero-link"),
   backdrop: document.getElementById("hero-backdrop"),
 };
-
 const rows = {
   trending: document.getElementById("row-trending"),
   popular: document.getElementById("row-popular"),
@@ -25,20 +25,22 @@ const searchSection = document.getElementById("search-result-section");
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
 
-
+// ===== ฟังก์ชันเรียก API =====
 const getJSON = async (endpoint, params = {}) => {
   const url = new URL(API_ROOT + endpoint);
   url.searchParams.set("api_key", API_KEY);
   url.searchParams.set("language", "th-TH");
+
   for (const [k, v] of Object.entries(params)) {
     url.searchParams.set(k, v);
   }
-  
+
   const res = await fetch(url);
   if (!res.ok) throw new Error(`API error ${res.status}`);
   return res.json();
 };
 
+// ===== สร้าง Card =====
 const buildCardHTML = (item) => {
   const title = item.title || item.name || "Untitled";
   const date = (item.release_date || item.first_air_date || "").slice(0,4);
@@ -62,15 +64,11 @@ const buildCardHTML = (item) => {
     </a>
   `;
 };
-
 const fillRow = (el, items=[]) => {
-  el.innerHTML = items
-    .filter(x => x.poster_path) 
-    .map(buildCardHTML)
-    .join("");
+  el.innerHTML = items.filter(x => x.poster_path).map(buildCardHTML).join("");
 };
 
-
+// ===== Hero Section =====
 const loadHero = async () => {
   const data = await getJSON("/trending/movie/week", { page: 1 });
   const movie = data.results?.[0];
@@ -83,7 +81,7 @@ const loadHero = async () => {
   }
 };
 
-
+// ===== Rows =====
 const loadAllRows = async () => {
   const [trend, pop, top, nowPlaying, upcoming] = await Promise.all([
     getJSON("/trending/all/week", { page: 1 }),
@@ -92,19 +90,16 @@ const loadAllRows = async () => {
     getJSON("/movie/now_playing", { page: 1 }),
     getJSON("/movie/upcoming", { page: 1 }),
   ]);
-
   fillRow(rows.trending, trend.results);
   fillRow(rows.popular, pop.results);
   fillRow(rows.toprated, top.results);
-  fillRow(rows.now, [...nowPlaying.results, ...upcoming.results]); 
+  fillRow(rows.now, [...nowPlaying.results, ...upcoming.results]);
 };
 
-
+// ===== Genres =====
 const loadGenres = async () => {
   const g = await getJSON("/genre/movie/list");
-  genreMenu.innerHTML = g.genres
-    .map(gn => `<a href="#" data-genre="${gn.id}">${gn.name}</a>`)
-    .join("");
+  genreMenu.innerHTML = g.genres.map(gn => `<a href="#" data-genre="${gn.id}">${gn.name}</a>`).join("");
 
   genreMenu.querySelectorAll("a").forEach(a => {
     a.addEventListener("click", async (e) => {
@@ -113,7 +108,6 @@ const loadGenres = async () => {
       const name = a.textContent;
       genreTitle.textContent = `หมวดหมู่: ${name}`;
       genreSection.hidden = false;
-
       const page1 = await getJSON("/discover/movie", {
         with_genres: id,
         sort_by: "popularity.desc",
@@ -126,7 +120,7 @@ const loadGenres = async () => {
   });
 };
 
-
+// ===== Search =====
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const q = searchInput.value.trim();
@@ -137,12 +131,12 @@ searchForm.addEventListener("submit", async (e) => {
   window.scrollTo({ top: searchSection.offsetTop - 70, behavior: "smooth" });
 });
 
-
+// ===== Start =====
 (async function init(){
-  try{
+  try {
     await Promise.all([loadHero(), loadAllRows(), loadGenres()]);
-  }catch(err){
+  } catch(err) {
     console.error(err);
-    alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก TMDb (เช็ค API Key / อินเทอร์เน็ต)");
+    alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก TMDb");
   }
 })();
