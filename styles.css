@@ -75,11 +75,23 @@ body{
 .row{ margin:22px 0 10px; }
 .row h2{ margin:0 0 10px; font-size:20px; }
 
+.scroller-wrapper{
+  display:flex; align-items:center; gap:12px; position:relative;
+}
+.scroll-btn{
+  background:rgba(0,0,0,.08); color:#fff; border:none; width:40px; height:40px;
+  border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-size:18px; flex-shrink:0; transition:all .2s ease; z-index:10;
+}
+.scroll-btn:hover{ background:rgba(229,9,20,.6); }
+.scroll-btn:active{ transform:scale(.95); }
 
 .scroller{
   display:grid; grid-auto-flow:column; grid-auto-columns: minmax(140px, 16vw);
   gap:12px; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x proximity;
+  scrollbar-width:none; -ms-overflow-style:none; flex:1;
 }
+.scroller::-webkit-scrollbar{ display:none; }
 .card{
   scroll-snap-align:start; background:var(--card); border:1px solid #2b2b36; border-radius:14px;
   overflow:hidden; position:relative; transition:transform .2s ease, box-shadow .2s ease;

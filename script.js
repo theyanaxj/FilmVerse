@@ -108,6 +108,22 @@ searchForm.addEventListener("submit",async e=>{
 });
 
 
+// Initialize scroll buttons
+document.querySelectorAll('.scroll-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const scrollerId = btn.dataset.scroll;
+    const scroller = document.getElementById(scrollerId);
+    if(!scroller) return;
+    
+    const scrollAmount = scroller.offsetWidth * 0.8;
+    const isNext = btn.classList.contains('next');
+    const direction = isNext ? scrollAmount : -scrollAmount;
+    
+    scroller.scrollBy({left: direction, behavior: 'smooth'});
+  });
+});
+
+
 (async function init(){
   try{
     await Promise.all([loadHero(),loadAllRows(),loadGenres()]);
